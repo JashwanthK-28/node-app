@@ -37,12 +37,14 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-            sh """
-            sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
-            kubectl apply -f k8s/deployment.yaml
-            kubectl apply -f k8s/service.yaml
-            """
+                sh """
+                export KUBECONFIG=/home/user/.kube/config
+                sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
+                kubectl apply -f k8s/deployment.yaml
+                kubectl apply -f k8s/service.yaml
+                """
     }
+}
 }
         }
     }
