@@ -39,7 +39,6 @@ pipeline {
             steps {
                 sh """
                 sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
-                minikube image load ${DOCKER_IMAGE}:${BUILD_NUMBER}
                 minikube kubectl -- apply -f k8s/deployment.yaml
                 minikube kubectl -- apply -f k8s/service.yaml
                 """
