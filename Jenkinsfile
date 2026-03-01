@@ -38,6 +38,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
+                minikube image load ${DOCKER_IMAGE}:${BUILD_NUMBER}
                 sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
                 kubectl apply -f k8s/deployment.yaml
                 kubectl apply -f k8s/service.yaml
